@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+
+
+        /**
+         MD5: 6F:F9:81:25:0D:44:BA:84:1B:61:91:2C:36:72:6E:BB
+         SHA1: 0B:D7:02:CD:D8:FF:80:DC:0E:18:F0:9D:21:87:6A:C1:06:92:DF:96
+         SHA256: 5C:15:DC:9B:C4:A1:24:5B:C4:CF:DC:B6:53:A9:F4:CF:73:30:EA:57:4C:03:F1:5D:EB:95:E5:F8:04:D2:4A:7C
+         签名算法名称: SHA256withRSA
+         版本: 3
+         * */
+        release {
+            keyAlias 'openSourceRelease'
+            keyPassword '123456'
+            storeFile file('openSourceRelease')
+            storePassword '123456'
+        }
+
+        /**
+         MD5: 7B:1B:CB:D3:21:FA:CF:E7:10:AA:2E:D8:E0:9C:D8:BD
+         SHA1: 77:DD:AB:E5:78:8D:46:DF:1B:60:20:4E:0E:55:7F:28:DD:B6:9B:48
+         SHA256: CB:9A:BE:E1:D9:BD:25:70:30:02:E9:7C:96:20:8A:7B:63:CB:D9:11:35:B7:B9:04:67:04:33:A1:39:20:E7:0E
+         签名算法名称: SHA256withRSA
+         版本: 3
+         *
+         * */
+        debug {
+            keyAlias 'openSourceDebug'
+            keyPassword '123456'
+            storeFile file('openSourceDebug')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.example.frame.opensourceprojects"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //log 查看工具
+    compile 'com.zql.android:lolly:1.1'
+    //rxPermission
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.5'
+    compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+    //6。0新控件
+    implementation 'com.android.support:design:26.1.0'
+
+    //状态栏兼容类
+    compile ('com.github.niorgai:StatusBarCompat:2.1.4', {
+        exclude group: 'com.android.support'
+    })
+
+    //解决dex 65 方法
+    compile 'com.google.android:multidex:0.1'
+}
